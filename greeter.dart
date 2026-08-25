@@ -90,7 +90,6 @@ void main() {
   DateTime now = DateTime.now();
   int hour = now.hour;
   String tagesZeit;  
-  print(hour);
   Greeter greeter = Greeter();
   print('Greeter Geschlecht: ${greeter.geschlecht}');
   if (greeter.alter <= 40) {
