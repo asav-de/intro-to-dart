@@ -7,14 +7,14 @@ class Greeter {
   late final String geschlecht;
 
   Greeter() {
-    this.vorname = checkerEingabe('vorname');
-    this.nachname = checkerEingabe('nachname');
-    this.alter = int.parse(checkerEingabe('alter'));
-    this.geschlecht = checkerEingabe('geschlecht');
+    this.vorname = eingabeChecker('vorname');
+    this.nachname = eingabeChecker('nachname');
+    this.alter = int.parse(eingabeChecker('alter'));
+    this.geschlecht = eingabeChecker('geschlecht');
   }
 }
 
-String checkerEingabe(String inputKind) {
+String eingabeChecker(String inputKind) {
   var age;
   var geschlecht;
   dynamic input;
@@ -58,7 +58,7 @@ String checkerEingabe(String inputKind) {
       stdout.write(inputKind + ' is Wrong\n'); 
       continue;
     case 'geschlecht':
-      stdout.write(inputKind + ": ");
+      stdout.write(inputKind + " (m/w/d): ");
       input = stdin.readLineSync()?.trim() ?? '';
       geschlecht = geschlechtChecker(input);
       return geschlecht;
@@ -67,7 +67,6 @@ String checkerEingabe(String inputKind) {
     } 
   }
 }
-
 
 bool isAlphaDe(String s) => RegExp(r'^[a-zA-ZäöüÄÖÜß]+$').hasMatch(s);
 bool isDigit(String s) => RegExp(r'^[0-9]+$').hasMatch(s);
@@ -82,52 +81,38 @@ String geschlechtChecker(input) {
   return geschlecht[g] ?? 'ohne/keine Angabe';
 }
 
-void begrussung(String tagesZeit, Greeter greeter) {
-  print('Guten ${tagesZeit}, ${greeter.geschlecht}, ${greeter.nachname}!');
+void main() {
+  Greeter greeter = Greeter();
+  greetChecker(greeter);
 }
 
-void main() {
+void greetChecker(Greeter greeter) {
   DateTime now = DateTime.now();
   int hour = now.hour;
-  String tagesZeit;  
-  Greeter greeter = Greeter();
-  print('Greeter Geschlecht: ${greeter.geschlecht}');
+  String tagesZeit;
   if (greeter.alter <= 40) {
     print('Hallo ${greeter.vorname}!');
   } else if (hour >= 6 && hour < 12){
       tagesZeit = 'Morgen';
-      switch (greeter.geschlecht) {
-        case 'Herr':
-          begrussung(tagesZeit, greeter);
-          break;
-        case 'Frau':
-          begrussung(tagesZeit, greeter);
-          break;
-        default:
-          print('Guten ${tagesZeit}, ${greeter.vorname} ${greeter.nachname}!');
-      }
+      greeting(greeter, tagesZeit);
     } else if (hour >= 12 && hour < 18) {
       tagesZeit = 'Tag';
-        switch (greeter.geschlecht) {
-          case 'Herr':
-            begrussung(tagesZeit, greeter);
-            break;
-          case 'Frau':
-            begrussung(tagesZeit, greeter);
-          default:
-            print('Guten ${tagesZeit}, ${greeter.vorname} ${greeter.nachname}!');
-        } 
+      greeting(greeter, tagesZeit);
     } else if (hour >= 18 && hour < 23){
-        tagesZeit = 'Abend';
-        switch (greeter.geschlecht) {
-          case 'Herr':
-            begrussung(tagesZeit, greeter);
-            break;
-          case 'Frau':
-            begrussung(tagesZeit, greeter);
-            break;
-          default:
-            print('Guten ${tagesZeit}, ${greeter.vorname} ${greeter.nachname}!');
-        }
+      tagesZeit = 'Abend';
+      greeting(greeter, tagesZeit);
     }
+}
+
+void greeting(Greeter greeter, String tagesZeit) {
+  switch (greeter.geschlecht) {
+  case 'Herr':
+    print('Guten ${tagesZeit}, ${greeter.geschlecht} ${greeter.nachname}!');
+    break;
+  case 'Frau':
+    print('Guten ${tagesZeit}, ${greeter.geschlecht} ${greeter.nachname}!');
+    break;
+  default:
+    print('Guten ${tagesZeit}, ${greeter.vorname} ${greeter.nachname}!');
+  }
 }
