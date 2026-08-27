@@ -1,12 +1,12 @@
 import 'dart:io';
 
-class Greeter {
+class Person {
   late final String vorname;
   late final String nachname;
   late final int alter;
   late final String geschlecht;
 
-  Greeter() {
+  Person() {
     this.vorname = eingabeChecker('vorname');
     this.nachname = eingabeChecker('nachname');
     this.alter = int.parse(eingabeChecker('alter'));
@@ -82,37 +82,37 @@ String geschlechtChecker(input) {
 }
 
 void main() {
-  Greeter greeter = Greeter();
-  greetChecker(greeter);
+  Person person = Person();
+  greetChecker(person);
 }
 
-void greetChecker(Greeter greeter) {
+void greetChecker(Person person) {
   DateTime now = DateTime.now();
   int hour = now.hour;
   String tagesZeit;
-  if (greeter.alter <= 40) {
-    print('Hallo ${greeter.vorname}!');
+  if (person.alter <= 40) {
+    print('Hallo ${person.vorname}!');
   } else if (hour >= 6 && hour < 12){
       tagesZeit = 'Morgen';
-      greeting(greeter, tagesZeit);
+      greeting(person, tagesZeit);
     } else if (hour >= 12 && hour < 18) {
       tagesZeit = 'Tag';
-      greeting(greeter, tagesZeit);
+      greeting(person, tagesZeit);
     } else if (hour >= 18 && hour < 23){
       tagesZeit = 'Abend';
-      greeting(greeter, tagesZeit);
+      greeting(person, tagesZeit);
     }
 }
 
-void greeting(Greeter greeter, String tagesZeit) {
-  switch (greeter.geschlecht) {
+void greeting(Person person, String tagesZeit) {
+  switch (person.geschlecht) {
   case 'Herr':
-    print('Guten ${tagesZeit}, ${greeter.geschlecht} ${greeter.nachname}!');
+    print('Guten ${tagesZeit}, ${person.geschlecht} ${person.nachname}!');
     break;
   case 'Frau':
-    print('Guten ${tagesZeit}, ${greeter.geschlecht} ${greeter.nachname}!');
+    print('Guten ${tagesZeit}, ${person.geschlecht} ${person.nachname}!');
     break;
   default:
-    print('Guten ${tagesZeit}, ${greeter.vorname} ${greeter.nachname}!');
+    print('Guten ${tagesZeit}, ${person.vorname} ${person.nachname}!');
   }
 }
