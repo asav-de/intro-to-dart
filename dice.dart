@@ -1,22 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'helper.dart';
+
 
 class Dice {
-  late final int sequenceNumber;
-  late final int _value;
+  final int value;
 
-  Dice(i){
-    this.sequenceNumber = i;
-  }
+  Dice(this.value);
 
-  get value => _value;
-
-  int get get => this._value;
-
-  void set(int value) {
-    _value = value;
-  }
 }
 
 List<Dice> trowGenerator(int numberOfRolls) {
@@ -24,10 +16,10 @@ List<Dice> trowGenerator(int numberOfRolls) {
   List<Dice> result = [];
   int sixCount = 0;
   for(int i = 0; i < numberOfRolls; i++){
-    Dice dice = Dice(i);
-    dice.set(random.nextInt(6) + 1);
+    final value = random.nextInt(6) + 1;
+    Dice dice = Dice(value);
     result.add(dice);
-    if (dice.get == 6) {
+    if (dice.value == 6) {
       sixCount++;
       if (sixCount == 2) {
         print('Limit erreicht');
@@ -42,18 +34,19 @@ List<Dice> trowGenerator(int numberOfRolls) {
 
 void main() {
   String diceQuantity;
-  int max = 5;
-  while(true) {
+  int max = 10;
+  int numberOfRolls = 0;
+  do {
     stdout.write('Number of rolls? Max quantity is ${max}\n');
     diceQuantity = stdin.readLineSync()?.trim() ?? '';
-    final numberOfRolls = int.tryParse(diceQuantity);
-    if (numberOfRolls == null || numberOfRolls < 1 || numberOfRolls > max) {
-      stdout.write('Enter a number from 1 to $max\n');
-      continue;
+    if (Helper.isDigit(diceQuantity)){
+      numberOfRolls = int.parse(diceQuantity);
     } else {
-      List<Dice> dice = trowGenerator(numberOfRolls);
-      print(dice.map((d) => d.get).join(' '));
-      break;
+      stdout.write('Invalid input! Enter a number from 1 to $max\n');
+      continue;
     }
-  }
+    print('!!!');
+    List<Dice> dice = trowGenerator(numberOfRolls);
+    print(dice.map((d) => d.value).join(' '));
+  } while(numberOfRolls < 1 || numberOfRolls > max);
 }
