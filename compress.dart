@@ -1,45 +1,46 @@
-import 'greeter.dart' show isAlphaDe;
+import 'helper.dart';
+
 void main(List<String> args) {
   List<String> result = [];
   args.isEmpty ? result.add("") : compress(args, result);
   print(result);
 }
 
-compress(List<String> args, result) {
+void compress(List<String> args, result) {
   int currentLetterCount = 0;
   final String input = args.join('');
   String prevLetter = input[0].toUpperCase();
 
-  for (final r in input.runes){
+  for (final r in input.runes) {
     final ch = String.fromCharCode(r).toUpperCase();
 
-    if (!isAlphaDe(ch)){
+    if (!Helper.isAlphaDe(ch)) {
       print('Invalid Input!');
       break;
     }
-    
-    if (isAlphaDe(ch) && prevLetter == ch){
+
+    if (Helper.isAlphaDe(ch) && prevLetter == ch) {
       currentLetterCount++;
-    } else if (prevLetter != ch && currentLetterCount < 3){
-        for (int i = 0; i < currentLetterCount; i++){
-          result.add(prevLetter);
-        }
-        prevLetter = ch;
-        currentLetterCount = 1;
-    } else if (prevLetter != ch && currentLetterCount >= 3) {
+    } else if (prevLetter != ch && currentLetterCount < 3) {
+      for (int i = 0; i < currentLetterCount; i++) {
         result.add(prevLetter);
-        result.add(currentLetterCount.toString());
-        prevLetter = ch;
-        currentLetterCount = 1;
+      }
+      prevLetter = ch;
+      currentLetterCount = 1;
+    } else if (prevLetter != ch && currentLetterCount >= 3) {
+      result.add(prevLetter);
+      result.add(currentLetterCount.toString());
+      prevLetter = ch;
+      currentLetterCount = 1;
     }
   }
-  
-  if (currentLetterCount < 3){
-    for (int i = 0; i < currentLetterCount; i++){
+
+  if (currentLetterCount < 3) {
+    for (int i = 0; i < currentLetterCount; i++) {
       result.add(prevLetter);
     }
   } else {
-      result.add(prevLetter);
-      result.add(currentLetterCount.toString());
+    result.add(prevLetter);
+    result.add(currentLetterCount.toString());
   }
 }
