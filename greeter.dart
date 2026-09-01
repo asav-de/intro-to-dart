@@ -10,7 +10,7 @@ class Person {
 
   Person(this.vorname, this.nachname, this.alter, this.geschlecht);
 
-  static createPersonFromInput() {
+  static Person createPersonFromInput() {
     String vorname = _eingabeChecker('vorname');
     String nachname = _eingabeChecker('nachname');
     int alter = int.tryParse(_eingabeChecker('alter')) ?? 0;
@@ -18,23 +18,22 @@ class Person {
     return Person(vorname, nachname, alter, geschlecht);
   }
 
-void greeting(tagesZeit) {
-  switch (this.geschlecht) {
-    case 'Herr':
-      print('Guten ${tagesZeit}, ${this.geschlecht} ${this.nachname}!');
-      break;
-    case 'Frau':
-      print('Guten ${tagesZeit}, ${this.geschlecht} ${this.nachname}!');
-      break;
-    default:
-      print('Guten ${tagesZeit}, ${this.vorname} ${this.nachname}!');
+  void greeting(dynamic tagesZeit) {
+    switch (geschlecht) {
+      case 'Herr':
+        print('Guten $tagesZeit, $geschlecht $nachname!');
+        break;
+      case 'Frau':
+        print('Guten $tagesZeit, $geschlecht $nachname!');
+        break;
+      default:
+        print('Guten $tagesZeit, $vorname $nachname!');
+    }
   }
-}
-
 
   static String _eingabeChecker(String inputKind) {
-    var age;
-    var geschlecht;
+    int? age;
+    String geschlecht;
     dynamic input;
     while (true) {
       switch (inputKind) {
@@ -87,10 +86,9 @@ void greeting(tagesZeit) {
   }
 }
 
-
 void main() {
   final person = Person.createPersonFromInput();
-  person.createPersonFromInput();
+  Person.createPersonFromInput();
 
   greetChecker(person);
 }
